@@ -1,5 +1,6 @@
-use std::collections::HashMap;
+//use std::collections::HashMap;
 use std::collections::LinkedList;
+mod reader;
 
 enum LispVal<'a> {
     Atom(String),
@@ -12,7 +13,7 @@ enum LispVal<'a> {
     List(&'a LinkedList<&'a LispVal<'a>>),
 }
 
-type EnvCtx<'a> = HashMap<String, &'a LispVal<'a>>;
+//type EnvCtx<'a> = HashMap<String, &'a LispVal<'a>>;
 
 fn show_val(val: &LispVal) -> String {
     match val {
@@ -40,34 +41,8 @@ fn show_list(contents: &LinkedList<&LispVal>) -> String {
     return result;
 }
 
-enum Token {
-    OpenParen,
-    CloseParen,
-    Symbol(String)
-}
-
-fn lex(input: &String) -> Vec<Token> {
-    let mut chars = input.chars();
-    let mut tokens: Vec<Token> = Vec::new();
-    for _x in 0..input.len() {
-        let lookahead = chars.next();
-
-        if let Some(character) = lookahead {
-            if character == ' ' {
-                continue;
-            }
-
-            let token = match character {
-                '(' => Some(Token::OpenParen),
-                ')' => Some(Token::CloseParen),
-                _ => None
-            };
-        }
-    }
-    return tokens;
-}
-
-fn main() {
+#[test]
+fn test() {
     let val1 = LispVal::Atom(String::from("hello"));
     let val2 = LispVal::Number(64);
     let val3 = LispVal::String(String::from("world"));
@@ -75,8 +50,7 @@ fn main() {
     let val5 = LispVal::Nil;
     let val6 = LispVal::Bool(true);
     let val7 = LispVal::Bool(false);
-    let val8 = LispVal::Bool(false);
-    let val9 = LispVal::Keyword(String::from("foo"));
+    let val8 = LispVal::Keyword(String::from("foo"));
 
     let mut list: LinkedList<&LispVal> = LinkedList::new();
     list.push_front(&val1);
@@ -87,18 +61,18 @@ fn main() {
     list.push_front(&val6);
     list.push_front(&val7);
     list.push_front(&val8);
-    list.push_front(&val9);
 
-    let val10 = LispVal::List(&list);
+    let val9 = LispVal::List(&list);
 
-    println!("{}", show_val(&val1));
-    println!("{}", show_val(&val2));
-    println!("{}", show_val(&val3));
-    println!("{}", show_val(&val4));
-    println!("{}", show_val(&val5));
-    println!("{}", show_val(&val6));
-    println!("{}", show_val(&val7));
-    println!("{}", show_val(&val8));
-    println!("{}", show_val(&val9));
-    println!("{}", show_val(&val10));
+    assert!(show_val(&val1) == String::from("hello"));
+    assert!(show_val(&val2) == String::from("64"));
+    assert!(show_val(&val3) == String::from("\"world\""));
+    assert!(show_val(&val4) == String::from("[procedure]"));
+    assert!(show_val(&val5) == String::from("nil"));
+    assert!(show_val(&val6) == String::from("true"));
+    assert!(show_val(&val7) == String::from("false"));
+    assert!(show_val(&val8) == String::from(":foo"));
+    assert!(show_val(&val9) == String::from("(:foo false true nil [procedure] \"world\" 64 hello)"));
 }
+
+fn main() {}

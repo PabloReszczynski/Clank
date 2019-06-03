@@ -1,8 +1,6 @@
 [package]
 name = "clank"
-version = "0.1.0"
+version = "0.0.0"
 authors = ["Pablo Reszczynski <pablore@me.com>"]
 edition = "2018"
-
-[dependencies]
-lalrpop = "0.17.0"
+build = "build.rs"
