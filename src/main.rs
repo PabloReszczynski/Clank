@@ -1,6 +1,5 @@
 //use std::collections::HashMap;
 use std::collections::LinkedList;
-mod reader;
 
 enum LispVal<'a> {
     Atom(String),

@@ -3,4 +3,3 @@ name = "clank"
 version = "0.0.0"
 authors = ["Pablo Reszczynski <pablore@me.com>"]
 edition = "2018"
-build = "build.rs"
